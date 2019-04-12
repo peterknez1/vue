@@ -1,60 +1,42 @@
+
+
 <template>
-  <div class="home">
-    <h1>{{title}}</h1>
-    <div class="row">
-      <div class="col-md-4 col-lg4" v-for="(data,index) in products" :key="index">
-        <img :src="data.image" class="img-fluid">
-         <h3 @click="goTodetail(data.productId)" >{{data.productTitle}}</h3>
-      </div>
+  <div>
+    <selected :selectedUser= $store.state.selected />
+    <div class="card" style="width: 18rem" v-for="user in $store.state.users" :key="user.id">
+      <User
+        v-bind:id=user.id
+        v-bind:firstName=user.firstName
+        v-bind:lastName=user.lastName
+        v-bind:email=user.email
+        v-bind:profileImage=user.profileImage
+        v-bind:details=user.details
+      />
+      <p></p>
     </div>
   </div>
 </template>
 
 <script>
+  import Data from '../data/users.json'
+  import User from './user'
+  import store from '../states/store'
+  import selected from './selected'
 export default {
   name: 'home',
   data () {
     return {
-      title: 'Home',
-      products:[
-      {
-        productTitle:"ABCN",
-        image       : require('../assets/images/product1.png'),
-        productId:1
-      },
-      {
-        productTitle:"KARMA",
-        image       : require('../assets/images/product2.png'),
-        productId:2
-      },
-      {
-        productTitle:"Tino",
-        image       : require('../assets/images/product3.png'),
-        productId:3
-      },
-      {
-        productTitle:"EFG",
-        image       : require('../assets/images/product4.png'),
-        productId:4
-      },
-      {
-        productTitle:"MLI",
-        image       : require('../assets/images/product5.png'),
-        productId:5
-      },
-      {
-        productTitle:"Banans",
-        image       : require('../assets/images/product6.png'),
-        productId:6
-      }
-      ]
+      title: 'Users',
+      users: this.$store.state.users,
+      selected: this.$store.state.selected
     }
   },
   methods:{
-  goTodetail(prodId) {
-    let proId=prodId
-    this.$router.push({name:'details',params:{Pid:proId}})
-  }
+
+  },
+  components: {
+    User,
+    selected
   }
 }
 </script>
